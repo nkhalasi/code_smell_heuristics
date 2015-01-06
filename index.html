@@ -67,6 +67,7 @@
                 </section>
 				<section>
 					<h3>Redundant Comments<p><small>Comments should say what the code cannot say for itself</small></p></h3>
+					Don't
 					<pre><code data-trim contenteditable>i++; //increment i</code></pre>
 					or
 					<pre><code data-trim contenteditable>
@@ -88,6 +89,69 @@ public SellResponse beginSellItem(SellRequest sellRequest)
 					<h3>Commented out code<p><small>Rots and becomes less and less irrelevant with each day</small></p></h3>
 					<p>Delete it. Source control system has it for reference.</p>
 					<p>Calls functions and uses variables that are no longer valid.</p>
+                </section>
+				<section>
+					<h3>One Click Build<p><small>Trivialize building a project</small></p></h3>
+					<p>Automate multi-steps and simplify</p>
+					<p>Explore new age build tools - SBT, Gradle, etc.</p>
+					<p>Does your build tool allow easy extensions?</p>
+                </section>
+				<section>
+					<h3>One Click Testing<p><small>Make testing less painful</small></p></h3>
+					<p>Running tests should be quick, easy and obvious</p>
+                </section>
+				<section>
+					<h3>Functions With Too Many Arguments<p><small>No Arguments is best</small></p></h3>
+					<p>Three is the limit</p>
+					<p>Time to refactor your design and abstractions when you need more arguments</p>
+                </section>
+				<section>
+					<h3>Output Arguments<p><small>They are counterintuitive</small></p></h3>
+					<p>Arguments are for inputs</p>
+					<p>Update state of the object being actioned</p>
+					<pre><code data-trim contendeditable>public void appendFooter(StringBuffer report)</code></pre>
+					vs
+					<pre><code data-trim contendeditable>report.appendFooter();</code></pre>
+                </section>
+				<section>
+					<section>
+						<h3>Flag Arguments<p><small>Strong smell and avoid them</small></p></h3>
+						<p>Clear indication that your function does more than one thing</p>
+						<p>Go back and revise your understanding of SRP</p>
+	                </section>
+					<section>
+						<pre><code data-trim contendeditable>def chosen_ident(choice_flag, item, match):
+    assert choice_flag in (action.ASIS, action.APPLY)
+    if choice_flag is action.ASIS:
+        return (item.artist, item.title)
+    elif choice_flag is action.APPLY:
+        return (match.info.artist, match.info.title)
+</code></pre>
+					</section>
+					<section>
+						<pre><code data-trim contendeditable>class _IdentChooser:
+    pass
+
+class AsisIdent(_IdentChooser):
+    def __call__(self, ident):
+        return (ident.artist, ident.title)
+
+class ApplyIdent(_IdentChooser):
+    def __call__(self, ident):
+    	assert ident.hasattr('info') is True
+        return (ident.info.artist, ident.info.title)
+
+class NullChooser(_Chooser):
+    def __call__(self, ident=None):
+        return ()
+
+choosers = {action.ASIS: AsisChooser, action.APPLY: ApplyChooser, None: NullChooser, '': NullChooser}
+
+def chosen_ident(choice_flag, item):
+    return choosers[choice_flag](item) </code></pre>
+                	</section>
+            	</section>
+				<section>
                 </section>
 				<section>
                 </section>
