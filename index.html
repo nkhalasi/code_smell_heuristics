@@ -150,14 +150,55 @@ choosers = {action.ASIS: AsisChooser, action.APPLY: ApplyChooser, None: NullChoo
 def chosen_ident(choice_flag, item):
     return choosers[choice_flag](item) </code></pre>
                 	</section>
+                	<section>
+                		<h3>Dead Function<p><small>it just rots and misguides</small></p></h3>
+                		<p>Just discard</p>
+                	</section>
+	            	<section>
+	            		<h3>Obvious Behavior Not Implemented<p><small>Follow "The Principle of Least Surprise"</small></p></h3>
+	            		<p>Not implementing the obvious results into
+		            		<ul>
+			            		<li>Confusions for readers of code</li>
+			            		<li>Loss of trust and thereby more efforts to read and understand the code</li>
+		            		</ul>            		
+	            		</p>
+	            		e.g. <code>getDayOfWeek()</code> should return Monday, Tuesday, etc and not 1, 2, 3, etc.
+	            	</section>
             	</section>
 				<section>
+					<h3>Incorrect Behavior at the Boundaries<p><small>Don't rely on your intuition</small></p></h3>
+					<p>Write tests for every boundary condition</p> 
                 </section>
 				<section>
+					<h3>Duplication<p><small>represents a missed opportunity for abstraction</small></p></h3>
+					<p>Always follow DRY principle</p>
+					<p>Abstraction increases vocabulary of your design</p>
+					<p>Improves reusability, increases coding speed and reduces error</p>
+					<p>Replace <code>switch/case</code> or <code>if/else</code> with polymorphism</p>
+					<p>Similar looking code? Does TEMPLATE METHOD or STRATEGY Pattern apply?</p>
                 </section>
 				<section>
+					<section>
+						<h3>Code At Wrong Level of Abstraction</h3>
+						<p>Seperate concepts at different levels and place them in different containers</p>
+						<p>Seperation should be complete. Don't mix lower and higher level concepts.</p> 						
+					</section>
+					<section>
+						Identify the misplaced abstraction in
+						<pre><code>public interface Stack {
+    Object pop() throws EmptyException;
+    void push(Object o) throws FullException;
+    double percentFull();
+    class EmptyException extends Exception {}
+    class FullException extends Exception {}
+}</code></pre>
+						<aside class="notes">
+							<code>percentFull()</code> is applicable to <code>BoundedStack</code> but may not be applicable to some other implementation of <code>Stack</code>
+						</aside>
+					</section>
                 </section>
 				<section>
+					<h3>Base Classes Depending on Their Derivatives</h3>
                 </section>
 				<section>
 					<h1>THE END</h1>
